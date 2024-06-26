@@ -1,5 +1,9 @@
+// src/TodoApp.js
+
 import React, { useState } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './TodoApp.css';
+import './animations.css';  // Create and import a CSS file for animations
 
 const TodoApp = () => {
   const [tasks, setTasks] = useState([]);
@@ -29,14 +33,20 @@ const TodoApp = () => {
         />
         <button onClick={handleAddTask}>Add Task</button>
       </div>
-      <ul>
+      <TransitionGroup component="ul">
         {tasks.map((task, index) => (
-          <li key={index}>
-            {task} 
-            <button onClick={() => handleDeleteTask(index)}>Delete</button>
-          </li>
+          <CSSTransition
+            key={index}
+            timeout={500}
+            classNames="fade"
+          >
+            <li>
+              {task}
+              <button onClick={() => handleDeleteTask(index)}>Delete</button>
+            </li>
+          </CSSTransition>
         ))}
-      </ul>
+      </TransitionGroup>
     </div>
   );
 };
